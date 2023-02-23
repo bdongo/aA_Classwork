@@ -50,7 +50,7 @@ describe "#my_transpose" do
         my_transpose(matrix)
     end
 end
-
+    
 #  it "doesn't call Array#uniq" do
 #         expect(arr).not_to receive(:uniq)
 #         my_uniq(arr)
