@@ -22,5 +22,15 @@ def two_sum(arr)
 end
 
 def my_transpose(matrix)
-
+    ans = Array.new(matrix.length){Array.new(matrix.length)}
+    (0...matrix.length).each do |i|
+        (0...matrix.length).each do |j|
+            ans[j][i] = matrix[i][j]
+        end
+    end
+    ans
 end
+
+def stock_picker(prices)
+    ans = []
+    

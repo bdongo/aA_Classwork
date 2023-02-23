@@ -46,15 +46,25 @@ describe "#my_transpose" do
         expect(my_transpose(matrix).is_a?(Array)).to be true
     end
     it "doesn't call Array#transpose" do
-        expect(matrix).not_to recieve(:transpose)
+        expect(matrix).not_to receive(:transpose)
         my_transpose(matrix)
     end
 end
     
-#  it "doesn't call Array#uniq" do
-#         expect(arr).not_to receive(:uniq)
-#         my_uniq(arr)
-#     end
+describe "stock_picker finds largest delta of elements in array" do
+    subject(:prices) {[ 5, 9, 11, 4, 8, 13, 2]}
+    it "finds biggest delta that has the smallest integer first" do
+        expect(stock_picker(prices)).to eq([3, 5])
+    end
+    it "doesn't find delta if smaller is after larger index" do
+        expect(stock_picker(prices)).not_to eq([5, 6])
+    end
+ 
+    it "output is an Array" do
+        expect(stock_picker(prices).is_a?(Array)).to be true
+    end
+end
+
 
 
 
