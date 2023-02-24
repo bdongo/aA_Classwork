@@ -51,7 +51,7 @@ describe "#my_transpose" do
     end
 end
     
-describe "stock_picker finds largest delta of elements in array" do
+describe "#stock_picker finds largest delta of elements in array" do
     subject(:prices) {[ 5, 9, 11, 4, 8, 13, 2]}
     it "finds biggest delta that has the smallest integer first" do
         expect(stock_picker(prices)).to eq([3, 5])
@@ -64,6 +64,8 @@ describe "stock_picker finds largest delta of elements in array" do
         expect(stock_picker(prices).is_a?(Array)).to be true
     end
 end
+
+describe 
 
 
 

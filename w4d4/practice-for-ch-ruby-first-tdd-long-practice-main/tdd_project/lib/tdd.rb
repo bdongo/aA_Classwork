@@ -33,4 +33,16 @@ end
 
 def stock_picker(prices)
     ans = []
+    result = 0
+    (0...prices.length).each do |i|
+        (i + 1...prices.length).each do |j|
+           delta = prices[j] - prices[i] 
+           if delta > result
+                result = delta
+                ans = [i, j]
+           end
+        end
+    end
+    ans
+end
     
