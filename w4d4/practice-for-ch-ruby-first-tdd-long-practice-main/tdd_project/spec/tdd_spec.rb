@@ -65,7 +65,6 @@ describe "#stock_picker finds largest delta of elements in array" do
     end
 end
 
-describe 
 
 
 
