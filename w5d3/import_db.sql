@@ -69,5 +69,11 @@ VALUES
     ((SELECT id FROM questions WHERE title = 'sql'), (SELECT author_id FROM questions WHERE title = 'sql') );
 
 
+INSERT INTO 
+    replies (question_id, parent_reply_id, user_id, body)
+VALUES 
+    ((SELECT id FROM questions WHERE title = 'sql'), NULL, 4, 'it is sequel'), 
+    ((SELECT id FROM questions WHERE title = 'sql'), 1, 3, 'no its not') ;
+
 
 
