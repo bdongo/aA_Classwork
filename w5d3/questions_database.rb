@@ -11,16 +11,7 @@ class QuestionsDBConnection < SQLite3::Database
         self.results_as_hash = true 
     end
 
-
 end
-
-
-
-
-
-
-
-
 
 # print reply = Replies.find_by_id(2)
 # puts

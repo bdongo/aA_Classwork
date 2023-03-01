@@ -23,7 +23,7 @@ class QuestionsFollows
                 SELECT 
                     * 
                 FROM 
-                    questions
+                    questions_follows
                 WHERE 
                     id = ?; 
             SQL
@@ -31,6 +31,33 @@ class QuestionsFollows
         data.map { |datum| QuestionsFollows.new(datum) }
     end
 
-    
+    def self.followers_for_question_id(id)
+        data = QuestionsDBConnection.instance.execute(<<-SQL, id)
+                SELECT 
+                    users.id, users.fname, users.lname 
+                FROM 
+                    questions_follows
+                JOIN 
+                    users ON users.id = questions_follows.user_id
+                WHERE 
+                    questions_follows.question_id = ?; 
+            SQL
+
+        data.map { |datum| Users.new(datum) }
+    end
+
+    def self.followers_for_user_id(id)
+        data = QuestionsDBConnection.instance.execute(<<-SQL, id)
+                SELECT
+                    questions_follows.question_id, questions.title, questions.body, questions.author_id
+                FROM
+                    questions_follows
+                JOIN
+                    questions ON questions.id = questions_follows.question_id
+                WHERE
+                    questions_follows.user_id = ?;
+                SQL
+        data.map { |datum| Questions.new(datum) }
+    end
 
 end

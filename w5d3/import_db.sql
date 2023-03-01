@@ -66,7 +66,11 @@ VALUES
 INSERT INTO 
     questions_follows (question_id, user_id)
 VALUES
-    ((SELECT id FROM questions WHERE title = 'sql'), (SELECT author_id FROM questions WHERE title = 'sql') );
+    (1, 2),
+    (1, 3),
+    (1, 1),
+    (1, 4);
+
 
 
 INSERT INTO 
@@ -74,6 +78,8 @@ INSERT INTO
 VALUES 
     ((SELECT id FROM questions WHERE title = 'sql'), NULL, 4, 'it is sequel'), 
     ((SELECT id FROM questions WHERE title = 'sql'), 1, 3, 'no its not') ;
+
+
 
 
 

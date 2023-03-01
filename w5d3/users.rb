@@ -52,5 +52,8 @@ class Users
         Replies.find_by_user_id(self.id)
     end
 
+    def followed_questions
+        QuestionsFollows.followers_for_user_id(self.id)
+    end
 
 end 
