@@ -22,18 +22,46 @@ class Users
     end
 
     def initialize (options)
+        @id = options['id']
         @fname = options['fname']
         @lname = options['lname']
-        @id = options['id']
     end
 
-    def self.find_by_id
+    def self.find_by_id(id)
+        data = QuestionsDBConnection.instance.execute(<<-SQL, id)
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                id = ?;
+            SQL
 
+        Users.new(data.first)
     end 
 
-    def self.find_by_name (first, last)
+    def self.find_by_name(first, last)
+        data = QuestionsDBConnection.instance.execute(<<-SQL, first, last)
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                fname = ? AND lname = ?;
+        SQL
 
+        Users.new(data.first)
     end 
+
+    def authored_questions
+        Questions.find_by_author_id(self.id) #results in an array of objects
+    end
+
+    def authored_replies
+        Replies.find_by_user_id(self.id)
+    end
+
+
 end 
 
 class Questions 
@@ -50,17 +78,33 @@ class Questions
         @author_id = options['author_id']
     end
 
-    def self.find_by_author_id (author_id)
+
+    def self.find_by_author_id(author_id)
         
-        QuestionsDBConnection.instance.execute(<<-SQL, author_id)
-            SELECT 
-                * 
-            FROM 
-                questions
-            WHERE 
-                author_id = ?; 
-        SQL
+        data = QuestionsDBConnection.instance.execute(<<-SQL, author_id)
+                SELECT 
+                    * 
+                FROM 
+                    questions
+                WHERE 
+                    author_id = ?; 
+            SQL
+
+        data.map { |datum| Questions.new(datum) }
     end 
+
+    def author 
+
+        data = QuestionsDBConnection.instance.execute(<<-SQL, self.author_id)
+                SELECT 
+                    * 
+                FROM 
+                    questions
+                WHERE 
+                    author_id = ?; 
+            SQL
+        # return user obj
+    end
 end
 
 class QuestionsFollows
@@ -75,9 +119,21 @@ class QuestionsFollows
         @user_id = options['user_id']
         @id = options['id']
     end
-    def self.find_by_id
 
+    def self.find_by_id(id)
+        data = QuestionsDBConnection.instance.execute(<<-SQL,id)
+                SELECT 
+                    * 
+                FROM 
+                    questions
+                WHERE 
+                    id = ?; 
+            SQL
+
+        data.map { |datum| QuestionsFollows.new(datum) }
     end
+
+    
 
 end
 
@@ -94,9 +150,45 @@ class Replies
         @user_id = options['user_id']
         @id = options['id']
     end
-    def self.find_by_id
+    def self.find_by_id(id)
+        data = QuestionsDBConnection.instance.execute(<<-SQL, id)
+                SELECT 
+                    * 
+                FROM 
+                    replies
+                WHERE 
+                    id = ?; 
+            SQL
 
-    end 
+        data.map { |datum| Replies.new(datum) }
+    end
+    
+    def self.find_by_user_id(id)
+        data = QuestionsDBConnection.instance.execute(<<-SQL, id)
+                SELECT 
+                    * 
+                FROM 
+                    replies
+                WHERE 
+                    user_id = ?; 
+            SQL
+
+        data.map { |datum| Reply.new(datum) }
+    end
+
+    def self.find_by_question_id(id)
+data = QuestionsDBConnection.instance.execute(<<-SQL, id)
+                SELECT 
+                    * 
+                FROM 
+                    replies
+                WHERE 
+                    question_id = ?; 
+            SQL
+
+        data.map { |datum| Replies.new(datum) }
+    end
+
 end 
 
 class QuestionLike 
@@ -118,8 +210,12 @@ class QuestionLike
     end 
 end
 
-print Users.all
+print james = Users.find_by_name('Brandon', 'Leung')
+puts
+print james.id
 puts 
-print Questions.all 
+print james.fname
+puts
+print james.authored_questions
 puts 
-print QuestionsFollows.all
+# print QuestionsFollows.all
