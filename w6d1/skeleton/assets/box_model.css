@@ -6,6 +6,41 @@ body {
   background-color: #FEFFF1;
 }
 
+header {
+  display: flex;
+  justify-content: start;
+  width: 100px;
+  align-items: flex-end;
+}
+
+#links {
+  display: flex column;
+  justify-content: space-around;
+}
+
+#middle {
+  display: flex;
+  justify-content: space-between;
+}
+
+#reviews {
+  display: flex column;
+
+}
+
+body {
+  width: 900px;
+  margin: 0 auto;
+}
+
+aside{
+  width: 180px;
+}
+
+#main {
+  width: 700px;
+}
+
 h1 {
   font-size: 38px;
 }
@@ -24,7 +59,7 @@ ul li a, figcaption a {
 /* This selector selects only IMMEDIATE (1 level deep) image element children
 of the header element */
 header > img {
-  width: 100px;
+  width: 200px;
 }
 
 /* Selects all elements with the class attribute "ingredients-list" */
